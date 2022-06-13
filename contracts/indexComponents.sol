@@ -9,9 +9,7 @@ interface IPhutureIndex{
 interface IVTokenFactory{
     function vTokenOf(address) external view returns(address);
 }
-interface IERC20 {
-    function balanceOf(address account) external view returns (uint256);    
-}
+
 interface IVToken {
     function virtualTotalAssetSupply() external view returns (uint);
 
