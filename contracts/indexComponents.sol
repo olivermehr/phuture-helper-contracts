@@ -12,6 +12,11 @@ interface IVTokenFactory{
 interface IERC20 {
     function balanceOf(address account) external view returns (uint256);    
 }
+interface IVToken {
+    function virtualTotalAssetSupply() external view returns (uint);
+
+
+}
 
 contract IndexComponents {
 
@@ -53,7 +58,8 @@ contract IndexComponents {
         
         for (uint i=0;i<underlyingAssetAddresses.length;i++){
             address _vTokenasset = getVTokenOf(index, underlyingAssetAddresses[i]);
-            uint256 _vTokenBalance = IERC20(underlyingAssetAddresses[i]).balanceOf(_vTokenasset);
+            IVToken _vToken = IVToken(_vTokenasset);
+            uint256 _vTokenBalance = _vToken.virtualTotalAssetSupply();
             components[i] =  componentStruct({
                 assetAddress:underlyingAssetAddresses[i],
                 balance:_vTokenBalance});  
