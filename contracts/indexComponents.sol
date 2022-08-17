@@ -77,4 +77,16 @@ contract IndexComponents {
         }
         return components;
     }
+    /// @notice Retrieve the array of vtoken addresses currently used by the index
+    /// @param index Specify the index which you want to find the current vtoken addressses
+    /// @return vTokenArray An array of addresses 
+    function getVTokenArray(address index ) public view returns (address[] memory){
+        address[] memory underlyingAssetAddresses = callActiveAndInactiveAnatomy(index);
+        address[] memory vTokenArray = new address[](underlyingAssetAddresses.length);
+        for (uint i=0; i<underlyingAssetAddresses.length; i++){
+            vTokenArray[i] = getVTokenOf(index, underlyingAssetAddresses[i]);
+        }
+        return vTokenArray;
+
+    }
     }
