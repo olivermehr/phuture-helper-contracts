@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.14;
+pragma solidity 0.8.16;
 /// @title Interface for Phuture indices
 interface IPhutureIndex{
     /// @notice Provides the anatomy of an index including assets and weights
@@ -32,17 +32,17 @@ contract IndexComponents {
     /// @return Array of contract addresses for each asset in the index
     function callActiveAndInactiveAnatomy(address index) internal view returns(address[] memory){
         IPhutureIndex indexContract = IPhutureIndex(index);
-        (address[] memory allAssets,) = indexContract.anatomy();
+        (address[] memory assets ,) = indexContract.anatomy();
         address[] memory inactiveAssets = indexContract.inactiveAnatomy();
-        if (inactiveAssets.length == 0){
-            return allAssets;
+        address[] memory allAssets = new address[](assets.length+inactiveAssets.length);
+
+        for(uint i; i < assets.length;i++){
+            allAssets[i] = assets[i];
         }
-        else {
-        for(uint i = 0; i < inactiveAssets.length;i++){
-            allAssets[i+allAssets.length] = inactiveAssets[i];
+        for (uint i; i < inactiveAssets.length; i++){
+            allAssets[i+assets.length] = inactiveAssets[i];
         }
-            return allAssets;
-        }
+        return allAssets;
         
     }
     /// @notice Retrieve the address of the vToken factory
