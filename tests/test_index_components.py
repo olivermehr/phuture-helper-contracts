@@ -1,14 +1,10 @@
 import brownie
-from brownie import IndexComponents, accounts, Contract
+from brownie import IndexComponents,Contract
 import pytest
 
 @pytest.fixture
 def index_components_contract():
     return IndexComponents[1]
-
-@pytest.fixture
-def account():
-    return accounts.load('test_account')
 
 @pytest.fixture
 def get_components_function(index_components_contract):
